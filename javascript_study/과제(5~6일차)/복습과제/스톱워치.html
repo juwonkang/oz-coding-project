@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            text-align: center;
+        }
+        #time{
+            font-size: 30px;
+        }
+        button{
+            font-size:  50px;
+            margin: 30px;
+        }
+        #recoder{
+            font-size: 30px;
+            margin-top: 10px;
+        }
+        #start:active{
+            transform: scale(1.1,1.1);
+          
+
+        }
+       
+       
+    </style>
+</head>
+<body>
+    <div>
+    <h1>스톱워치</h1>
+    <div id="time">
+        <span id="minutes">00:</span>
+        <span id="seconds">00:</span>
+        <span id="microseconds">00</span>
+
+    </div>
+    <button id="start">시작</button>
+    <button id="stopper">중지</button>
+    
+    </div>
+    <button id="reset">리셋</button>
+    <button id="recoder">기록</button>
+    <p id="record"></p>
+    
+
+    
+
+
+
+
+    <script>
+        let minutes = 0;
+        let seconds =0;
+        let microseconds = 0;
+        let intervalId;
+        let records = [];
+        
+
+        const time = document.getElementById("time")
+        const appendminutes = document.getElementById("minutes")
+        const appendseconds = document.getElementById("seconds")
+        const appendmicroseconds = document.getElementById("microseconds")
+        const start = document.getElementById("start")
+        const stopper = document.getElementById("stopper")
+        const p = document.getElementById("record")
+        const recorder = document.getElementById("recorder")
+        const reset = document.getElementById("reset")
+        
+
+      
+        
+       start.onclick =function(){
+        clearInterval(intervalId)
+        intervalId = setInterval(operateTimer,10);
+        
+       }
+        
+
+            function operateTimer(){
+        microseconds++; 
+        appendmicroseconds.textContent = microseconds > 9 ? microseconds : "0" + microseconds;
+        
+        if(microseconds > 99){
+            seconds++
+            appendseconds.textContent = seconds > 9 ? seconds : "0" + seconds;
+        
+            microseconds = 0;
+            appendmicroseconds.textContent ='00';
+        }   
+        if(seconds > 59){
+            minutes++
+            appendminutes.textContent = minutes > 9 ? minutes : "0" + minutes;
+        
+            seconds = 0;
+            appendseconds.textContent = "00";
+            
+        }
+
+
+       }
+       var fuck = stopper.onclick = function(){
+        clearInterval(intervalId)
+        
+        
+       }
+       
+       recoder.onclick = function(){
+        const recordText = ` ${minutes}분 ${seconds}초 ${microseconds}`;
+            records.push(`${recordText}`);  // 배열에 새로운 기록 추가
+            p.innerHTML = records.join("<br>");  // 배열의 기록을 텍스트로 표시
+        
+        
+       }
+
+       reset.onclick = function(){
+         location.reload(true)
+       }
+
+
+       
+       
+        
+
+    </script>
+</body>
+</html>
